@@ -4,13 +4,10 @@ body {
 }
 
 h1 {
-    margin: 0;
+    color: white;
+    background-color: black;
 }
 
-#my-graph {
-    height: 80vh;
-}
-
-#my-range-slider {
-    width: 90vw;
+#entry-number-graph {
+    height: 90vh;
 }
