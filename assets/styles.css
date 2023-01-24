@@ -4,10 +4,15 @@ body {
 }
 
 h1 {
+    color: orange;
+    background-color: #0047AB;
+}
+
+h2 {
     color: white;
     background-color: black;
 }
 
-#entry-number-graph {
+.dash-graph {
     height: 90vh;
 }
