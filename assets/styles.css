@@ -1,0 +1,16 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+#my-graph {
+    height: 80vh;
+}
+
+#my-range-slider {
+    width: 90vw;
+}
