@@ -3,8 +3,9 @@ import plotly.express as px
 import pandas as pd
 
 app = Dash(__name__)
+app.title = 'motoe'
 
-df = pd.read_csv('dataset-all.csv')
+df = pd.read_csv('data/dataset-all.csv')
 
 # ENTRY NUMBERS
 entrants_columns = df.columns[1:10]
