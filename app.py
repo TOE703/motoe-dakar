@@ -3,6 +3,8 @@ import plotly.express as px
 import pandas as pd
 
 app = Dash(__name__)
+server = app.server
+
 app.title = 'motoe'
 
 df = pd.read_csv('data/dataset-all.csv')
