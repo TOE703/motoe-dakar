@@ -1,11 +1,10 @@
 from dash import dcc, html
-from create_graphs import app
-from dakarcharts import create_graphs
+import create_graphs
 
 
 # HTML
 def create_page():
-    app.layout = html.Div([
+    create_graphs.app.layout = html.Div([
         html.Link(rel='stylesheet',
                   href='/static/styles.css'),
         html.H1('motoe'),
@@ -25,7 +24,7 @@ def create_page():
         dcc.Graph(figure=create_graphs.create_length_graph(),
                   id='length-graph data-graph')
     ])
-    return app
+    return create_graphs.app
 
 
-create_page().run_server(debug=True)
+create_page().run_server()
