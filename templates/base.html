@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/>
+    <title>motoe</title>
+</head>
+<body>
+<h1>motoe</h1>
+<h2>Dakar Stats</h2>
+<p>Single click to add or remove a category. Double click to show only that category or show all categories.</p>
+<div id="entry" class="figure-container">
+    <h3>Entry Numbers</h3>
+    {% block entry %}
+    {{ entry | safe }}
+    {% endblock %}
+</div>
+<div id="finisher" class="figure-container">
+    <h3>Finisher Percentage</h3>
+    {% block finisher %}
+    {{ finisher | safe }}
+    {% endblock %}
+</div>
+<div id="distance" class="figure-container">
+    <h3>Distance (km)</h3>
+    {% block distance %}
+    {{ distance | safe }}
+    {% endblock %}
+</div>
+<div id="length" class="figure-container">
+    <h3>Length (km)</h3>
+    {% block length %}
+    {{ length | safe }}
+    {% endblock %}
+</div>
+</body>
+</html>
