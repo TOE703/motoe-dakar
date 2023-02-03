@@ -1,9 +1,8 @@
-from dash import Dash, dcc, html
+from dash import Dash
 import plotly.express as px
 import pandas as pd
 
 app = Dash(__name__)
-server = app.server
 
 app.title = 'motoe'
 
@@ -114,29 +113,4 @@ def create_length_graph():
             orientation='h'
         )
     )
-    return length_fig.to
-
-
-# HTML
-def create_page():
-    app.layout = html.Div([
-        html.H1('Dakar Stats'),
-        html.P(
-            'Single click to add or remove a category. Double click to show only that category or show all categories.'),
-        html.H2('Entry Numbers'),
-        dcc.Graph(figure=create_entry_numbers_graphs(),
-                  id='entry-number-graph data-graph'),
-        html.H2('Finisher Percentage'),
-        dcc.Graph(figure=create_finisher_percent_graph(),
-                  id='finisher-number-graph data-graph'),
-        html.H2('Distance (km)'),
-        dcc.Graph(figure=create_distance_graph(),
-                  id='distance-graph data-graph'),
-        html.H2('Length (days)'),
-        dcc.Graph(figure=create_length_graph(),
-                  id='length-graph data-graph')
-    ])
-    return app
-
-
-create_page().run_server(debug=True)
+    return length_fig
