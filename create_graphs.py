@@ -2,10 +2,21 @@ import plotly.express as px
 import pandas as pd
 
 df = pd.read_csv('data/dataset-all.csv')
+entry_number_columns = slice(1, 10)
+finisher_percent_columns = slice(19, 28)
+distance_columns = slice(28, 30)
+length_columns = slice(30, 32)
 
 
-# ENTRY NUMBERS
-def create_entry_numbers_figure(columns, has_trendline):
+def set_default_updates(figure):
+    figure.update_traces(mode='markers+lines')
+    figure.update_xaxes(tickmode='linear',
+                        tickangle=-45,
+                        rangeslider_visible=True)
+    return figure
+
+
+def create_base_figure(columns, has_trendline):
     if has_trendline:
         return px.scatter(df,
                           x=df['Year'],
@@ -18,12 +29,10 @@ def create_entry_numbers_figure(columns, has_trendline):
                           y=df.columns[columns])
 
 
+# ENTRY NUMBERS
 def create_entry_numbers_graphs(base_figure):
     entry_number_fig = base_figure
-    entry_number_fig.update_traces(mode='markers+lines')
-    entry_number_fig.update_xaxes(tickmode='linear',
-                                  tickangle=-45,
-                                  rangeslider_visible=True)
+    entry_number_fig = set_default_updates(entry_number_fig)
     entry_number_fig.update_yaxes(tickmode='linear',
                                   tick0=50,
                                   dtick=50,
@@ -40,17 +49,9 @@ def create_entry_numbers_graphs(base_figure):
 
 
 # FINISHERS PERCENT
-def create_finisher_percent_graph():
-    finisher_percent_columns = df.columns[19:28]
-    finisher_percent_fig = px.scatter(df,
-                                      x=df['Year'],
-                                      y=finisher_percent_columns,
-                                      trendline='ols',
-                                      trendline_scope='overall')
-    finisher_percent_fig.update_traces(mode='markers+lines')
-    finisher_percent_fig.update_xaxes(tickmode='linear',
-                                      tickangle=-45,
-                                      rangeslider_visible=True)
+def create_finisher_percent_graph(base_figure):
+    finisher_percent_fig = base_figure
+    finisher_percent_fig = set_default_updates(finisher_percent_fig)
     finisher_percent_fig.update_yaxes(tickmode='linear',
                                       tick0=10,
                                       dtick=10,
@@ -67,17 +68,9 @@ def create_finisher_percent_graph():
 
 
 # DISTANCE
-def create_distance_graph():
-    distance_columns = df.columns[28:30]
-    distance_fig = px.scatter(df,
-                              x=df['Year'],
-                              y=distance_columns,
-                              trendline='ols',
-                              trendline_scope='overall')
-    distance_fig.update_traces(mode='markers+lines')
-    distance_fig.update_xaxes(tickmode='linear',
-                              tickangle=-45,
-                              rangeslider_visible=True)
+def create_distance_graph(base_figure):
+    distance_fig = base_figure
+    distance_fig = set_default_updates(distance_fig)
     distance_fig.update_yaxes(tickmode='linear',
                               tick0=1000,
                               dtick=1000,
@@ -94,17 +87,9 @@ def create_distance_graph():
 
 
 # LENGTH
-def create_length_graph():
-    length_columns = df.columns[30:32]
-    length_fig = px.scatter(df,
-                            x=df['Year'],
-                            y=length_columns,
-                            trendline='ols',
-                            trendline_scope='overall')
-    length_fig.update_traces(mode='markers+lines')
-    length_fig.update_xaxes(tickmode='linear',
-                            tickangle=-45,
-                            rangeslider_visible=True)
+def create_length_graph(base_figure):
+    length_fig = base_figure
+    length_fig = set_default_updates(length_fig)
     length_fig.update_yaxes(tickmode='linear',
                             tick0=1,
                             dtick=1)
