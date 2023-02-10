@@ -1,22 +1,25 @@
-from dash import Dash
 import plotly.express as px
 import pandas as pd
-
-app = Dash(__name__)
-
-app.title = 'motoe'
 
 df = pd.read_csv('data/dataset-all.csv')
 
 
 # ENTRY NUMBERS
-def create_entry_numbers_graphs():
-    entrants_columns = df.columns[1:10]
-    entry_number_fig = px.scatter(df,
-                                  x=df['Year'],
-                                  y=entrants_columns,
-                                  trendline='ols',
-                                  trendline_scope='overall')
+def create_entry_numbers_figure(columns, has_trendline):
+    if has_trendline:
+        return px.scatter(df,
+                          x=df['Year'],
+                          y=df.columns[columns],
+                          trendline='ols',
+                          trendline_scope='overall')
+    else:
+        return px.scatter(df,
+                          x=df['Year'],
+                          y=df.columns[columns])
+
+
+def create_entry_numbers_graphs(base_figure):
+    entry_number_fig = base_figure
     entry_number_fig.update_traces(mode='markers+lines')
     entry_number_fig.update_xaxes(tickmode='linear',
                                   tickangle=-45,
