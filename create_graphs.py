@@ -34,9 +34,8 @@ def create_entry_numbers_graphs(base_figure):
     entry_number_fig = base_figure
     entry_number_fig = set_default_updates(entry_number_fig)
     entry_number_fig.update_yaxes(tickmode='linear',
-                                  tick0=50,
-                                  dtick=50,
-                                  minor=dict(tick0=25, dtick=25, showgrid=True))
+                                  tick0=25,
+                                  dtick=25)
     entry_number_fig.update_layout(
         xaxis_title='Year',
         yaxis_title='Entries',
@@ -53,9 +52,8 @@ def create_finisher_percent_graph(base_figure):
     finisher_percent_fig = base_figure
     finisher_percent_fig = set_default_updates(finisher_percent_fig)
     finisher_percent_fig.update_yaxes(tickmode='linear',
-                                      tick0=10,
-                                      dtick=10,
-                                      minor=dict(tick0=5, dtick=5, showgrid=True))
+                                      tick0=5,
+                                      dtick=5)
     finisher_percent_fig.update_layout(
         xaxis_title='Year',
         yaxis_title='Finisher Percentage',
@@ -72,9 +70,8 @@ def create_distance_graph(base_figure):
     distance_fig = base_figure
     distance_fig = set_default_updates(distance_fig)
     distance_fig.update_yaxes(tickmode='linear',
-                              tick0=1000,
-                              dtick=1000,
-                              minor=dict(tick0=500, dtick=500, showgrid=True))
+                              tick0=500,
+                              dtick=500)
     distance_fig.update_layout(
         xaxis_title='Year',
         yaxis_title='Distance (km)',

@@ -1,5 +1,4 @@
 from dash import Dash, dcc, html, Output, Input, ctx
-import plotly.express as px
 import create_graphs
 
 my_app = Dash(__name__)
@@ -16,7 +15,7 @@ def build_app():
         html.H2('Dakar Stats'),
         html.P('Single click to add or remove a category.'
                ' Double click to show only that category or reshow all categories.'),
-        html.P('The \'Selected\' button will show a trendline for only the selected categories'),
+        html.P('The \'Selected\' button will show a trendline for only the selected categories.'),
         html.H3('Entry Numbers'),
         html.Button('Selected', id='entry-selected-button', n_clicks=0),
         html.Button('Reset', id='entry-reset-button', n_clicks=0),
@@ -24,6 +23,8 @@ def build_app():
             create_graphs.create_base_figure(create_graphs.entry_number_columns, True)),
             id='entry-number-graph'),
         html.H3('Finisher Percentage'),
+        html.Button('Selected', id='finisher-selected-button', n_clicks=0),
+        html.Button('Reset', id='finisher-reset-button', n_clicks=0),
         dcc.Graph(figure=create_graphs.create_finisher_percent_graph(
             create_graphs.create_base_figure(create_graphs.finisher_percent_columns, True)),
             id='finisher-number-graph'),
@@ -45,17 +46,38 @@ def build_app():
     Input('entry-selected-button', 'n_clicks'),
     Input('entry-reset-button', 'n_clicks')
 )
-def update_entry_graph(graph_x, entry_selected_button, entry_reset_button):
+def update_entry_graph(target_graph, entry_selected_button, entry_reset_button):
+    temp_columns = get_selected_columns(target_graph)
+    if 'entry-reset-button' == ctx.triggered_id or not temp_columns:
+        return create_graphs.create_entry_numbers_graphs(
+            create_graphs.create_base_figure(create_graphs.entry_number_columns, True))
+    elif 'entry-selected-button' == ctx.triggered_id:
+        return create_graphs.create_entry_numbers_graphs(create_graphs.create_base_figure(temp_columns, True))
+
+
+@my_app.callback(
+    Output('finisher-number-graph', 'figure'),
+    Input('finisher-number-graph', 'figure'),
+    Input('finisher-selected-button', 'n_clicks'),
+    Input('finisher-reset-button', 'n_clicks')
+)
+def update_finisher_graph(target_graph, finisher_selected_button, finisher_reset_button):
+    temp_columns = get_selected_columns(target_graph)
+    if 'finisher-reset-button' == ctx.triggered_id or not temp_columns:
+        return create_graphs.create_finisher_percent_graph(
+            create_graphs.create_base_figure(create_graphs.finisher_percent_columns, True))
+    elif 'finisher-selected-button' == ctx.triggered_id:
+        return create_graphs.create_finisher_percent_graph(create_graphs.create_base_figure(temp_columns, True))
+
+
+def get_selected_columns(target_graph):
     temp_columns = []
-    for v in graph_x['data']:
+    for v in target_graph['data']:
         if v['name'] == 'Overall Trendline':
             continue
         if 'visible' in v and v['visible'] == True:
             temp_columns.append(create_graphs.df.columns.get_loc(v['name']))
-    if 'entry-reset-button' == ctx.triggered_id or not temp_columns:
-        return create_graphs.create_entry_numbers_graphs(create_graphs.create_base_figure(slice(1, 10), True))
-    elif 'entry-selected-button' == ctx.triggered_id:
-        return create_graphs.create_entry_numbers_graphs(create_graphs.create_base_figure(temp_columns, True))
+    return temp_columns
 
 
 build_app().run_server()
